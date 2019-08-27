@@ -1,6 +1,7 @@
 <?php
 
 include('vendor/autoload.php');
+
 $dotenv = Dotenv\Dotenv::create(__DIR__, '.env');
 $dotenv->load();
 $ac = new ActiveCampaign(getenv('ACTIVECAMPAIGN_URL'), getenv('ACTIVECAMPAIGN_KEY'));

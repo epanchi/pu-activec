@@ -17,7 +17,7 @@ $listId = 1;
 
 $faker = Faker\Factory::create();
 
-for ($i = 0; $i < 5; $i++) {
+for ($i = 0; $i < 2; $i++) {
     $contact = array(
         "email"              => $faker->email,
         "first_name"         => $faker->firstName,

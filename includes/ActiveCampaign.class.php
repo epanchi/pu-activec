@@ -1,15 +1,12 @@
 <?php
 
-if ( !defined("ACTIVECAMPAIGN_URL") || (!defined("ACTIVECAMPAIGN_API_KEY") && !defined("ACTIVECAMPAIGN_API_USER") && !defined("ACTIVECAMPAIGN_API_PASS")) ) {
-	require_once(dirname(__FILE__) . "/config.php");
-}
-
 require_once("Connector.class.php");
 
 /**
  * Class ActiveCampaign
  */
-class ActiveCampaign extends AC_Connector {
+class ActiveCampaign extends AC_Connector
+{
 
 	/**
 	 * @var
@@ -64,7 +61,8 @@ class ActiveCampaign extends AC_Connector {
 	 * @param string $api_user
 	 * @param string $api_pass
 	 */
-	function __construct($url, $api_key, $api_user = "", $api_pass = "") {
+	function __construct($url, $api_key, $api_user = "", $api_pass = "")
+	{
 		$this->url_base = $this->url = $url;
 		$this->api_key = $api_key;
 		parent::__construct($url, $api_key, $api_user, $api_pass);
@@ -75,11 +73,17 @@ class ActiveCampaign extends AC_Connector {
 	 *
 	 * @param $version
 	 */
-	function version($version) {
-		$this->version = (int)$version;
+	function version($version)
+	{
+		$this->version = (int) $version;
 		if ($version == 2) {
 			$this->url_base = $this->url_base . "/2";
 		}
+	}
+	function v3()
+	{
+		$this->version = 3;
+		$this->url = $this->url_base . "/api/3";
 	}
 
 	/**
@@ -90,7 +94,8 @@ class ActiveCampaign extends AC_Connector {
 	 *
 	 * @return mixed
 	 */
-	function api($path, $post_data = array()) {
+	function api($path, $post_data = array())
+	{
 		// IE: "contact/view"
 		$components = explode("/", $path);
 		$component = $components[0];
@@ -110,15 +115,13 @@ class ActiveCampaign extends AC_Connector {
 			$method_arr = explode("?", $components[1]);
 			$method = $method_arr[0];
 			$params = $method_arr[1];
-		}
-		else {
+		} else {
 			// just a method provided
 			// IE: "contact/view
-			if ( isset($components[1]) ) {
+			if (isset($components[1])) {
 				$method = $components[1];
 				$params = "";
-			}
-			else {
+			} else {
 				return "Invalid method.";
 			}
 		}
@@ -127,15 +130,12 @@ class ActiveCampaign extends AC_Connector {
 		if ($component == "list") {
 			// reserved word
 			$component = "list_";
-		}
-		elseif ($component == "branding") {
+		} elseif ($component == "branding") {
 			$component = "design";
-		}
-		elseif ($component == "sync") {
+		} elseif ($component == "sync") {
 			$component = "contact";
 			$method = "sync";
-		}
-		elseif ($component == "singlesignon") {
+		} elseif ($component == "singlesignon") {
 			$component = "auth";
 		}
 

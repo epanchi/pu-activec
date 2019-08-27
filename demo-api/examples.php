@@ -84,6 +84,7 @@ echo "<p>Contact synced successfully (ID {$contact_id})!</p>";
 $ac->version(2);
 $contacts_view = $ac->api("contact/list?listid=14&limit=500");
 
+
 $ac->version(1);
 
 /*
